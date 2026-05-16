@@ -5,17 +5,24 @@ public class Bullet : MonoBehaviour
     public float speed = 200f;
     public float lifeTime = 3f;
 
-    private Rigidbody rb;
+    private Vector3 direction;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.linearVelocity = -transform.forward * speed;
+        direction = -transform.forward;
         Destroy(gameObject, lifeTime);
     }
 
+    void Update()
+    {
+        transform.position += direction * speed * Time.deltaTime;
+    }
+    
     private void OnCollisionEnter(Collision collision)
     {
-        Destroy(gameObject);
+        if (collision.gameObject.CompareTag("World"))
+        {
+            Destroy(gameObject);
+        }
     }
 }

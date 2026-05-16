@@ -3,22 +3,33 @@ using System.Collections;
 
 public class Gun : MonoBehaviour
 {
-    [Header("Gun Stats")]
-    public float reloadTime = 1f;
+    [Header("Gun Statistics")]
     public float fireRate = 0.1f;
     public int magSize = 20;
     public GameObject bullet;
     public Transform bulletSpawnPoint;
     public GameObject muzzleFlash;
 
-    [Header("Recoil")]
+    [Header("Recoil Settings")]
     public float recoilDistance = 0.05f;
     public float recoilSpeed = 15f;
 
-    [Header("Bloom")]
+    [Header("Bloom Settings")]
     public float bloomAmount = 1f;
 
-    [Header("Audio")]
+    [Header("Shotgun Settings")]
+    public bool useShotgunSpread = false;
+    public float spreadAmount = 1f;
+    public int pelletCount = 1;
+
+    [Header("Reload Settings")]
+    public float reloadTime = 1f;
+    public Vector3 reloadRotationOffset = new Vector3(66, 50, 50);
+    [Range(0f, 1f)] public float upTimePercent = 0.4f;
+    [Range(0f, 1f)] public float holdTimePercent = 0.2f;
+    [Range(0f, 1f)] public float downTimePercent = 0.4f;
+
+    [Header("Audio Settings")]
     public AudioSource audioSource;
     public AudioClip shootSound;
     public AudioClip reloadSound;
@@ -33,7 +44,6 @@ public class Gun : MonoBehaviour
 
     private Quaternion initalRotation;
     private Vector3 initalPosition;
-    private Vector3 reloadRotationOffset = new Vector3(66, 50, 50);
 
     void Start()
     {
@@ -59,7 +69,7 @@ public class Gun : MonoBehaviour
         {
             return;
         }
-        
+
         if (currentAmmo <= 0)
         {
             StartCoroutine(Reload());
@@ -69,14 +79,24 @@ public class Gun : MonoBehaviour
         nextTimeToFire = Time.time + fireRate;
         currentAmmo--;
 
-        Vector3 shootDirection = bulletSpawnPoint.forward;
-        shootDirection += new Vector3(Random.Range(-bloomAmount, bloomAmount), Random.Range(-bloomAmount, bloomAmount), Random.Range(-bloomAmount, bloomAmount)) * 0.01f;
-
-        Quaternion bulletRotation = Quaternion.LookRotation(shootDirection);
-        Instantiate(bullet, bulletSpawnPoint.position, bulletRotation);
+        for (int i = 0; i < pelletCount; i++)
+        {
+            Vector3 shootDirection = bulletSpawnPoint.forward;
+            if (useShotgunSpread)
+            {
+                shootDirection = Quaternion.Euler(Random.Range(-spreadAmount, spreadAmount), Random.Range(-spreadAmount, spreadAmount), 0) * shootDirection;
+                Quaternion bulletRotation = Quaternion.LookRotation(shootDirection);
+                Instantiate(bullet, bulletSpawnPoint.position, bulletRotation);
+            }
+            else
+            {
+                shootDirection += new Vector3(Random.Range(-bloomAmount, bloomAmount), Random.Range(-bloomAmount, bloomAmount), Random.Range(-bloomAmount, bloomAmount)) * 0.01f;
+                Quaternion bulletRotation = Quaternion.LookRotation(shootDirection);
+                Instantiate(bullet, bulletSpawnPoint.position, bulletRotation);
+            }
+        }
         Instantiate(muzzleFlash, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
         PlaySound(shootSound, shootPitchMin, shootPitchMax);
-
         StopCoroutine(nameof(Recoil));
         StartCoroutine(nameof(Recoil));
     }
@@ -87,25 +107,38 @@ public class Gun : MonoBehaviour
 
         PlaySound(reloadSound, 0.95f, 1.05f);
 
-        Quaternion targetRotation = Quaternion.Euler(initalRotation.eulerAngles + reloadRotationOffset);
-        float halfReload = reloadTime / 2f;
+        Quaternion startRot = initalRotation;
+        Quaternion upRot = Quaternion.Euler(initalRotation.eulerAngles + reloadRotationOffset);
+
+        float upTime = reloadTime * upTimePercent;
+        float holdTime = reloadTime * holdTimePercent;
+        float downTime = reloadTime * downTimePercent;
+
         float t = 0f;
-        
-        while (t < halfReload)
+        while (t < upTime)
         {
             t += Time.deltaTime;
-            transform.localRotation = Quaternion.Slerp(initalRotation, targetRotation, t / halfReload);
+            float p = t / upTime;
+
+            p = Mathf.SmoothStep(0, 1, p);
+            transform.localRotation = Quaternion.Slerp(startRot, upRot, p);
             yield return null;
         }
+
+        transform.localRotation = upRot;
+        yield return new WaitForSeconds(holdTime);
 
         t = 0f;
-
-        while (t < halfReload)
+        while (t < downTime)
         {
             t += Time.deltaTime;
-            transform.localRotation = Quaternion.Slerp(targetRotation, initalRotation, t / halfReload);
+            float p = t / downTime;
+            p = 1f - Mathf.Pow(1f - p, 3f);
+            transform.localRotation = Quaternion.Slerp(upRot, startRot, p);
             yield return null;
         }
+
+        transform.localRotation = startRot;
 
         currentAmmo = magSize;
         isReloading = false;
@@ -118,7 +151,7 @@ public class Gun : MonoBehaviour
             return;
         }
 
-        if (currentAmmo <= 0)
+        if (currentAmmo >= magSize)
         {
             return;
         }
