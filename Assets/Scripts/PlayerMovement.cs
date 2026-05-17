@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 12f;
@@ -7,10 +8,12 @@ public class PlayerMovement : MonoBehaviour
     public float groundDistance = 0.5f;
     public LayerMask groundMask;
     public Transform groundCheck;
-
+    public float externalDecay = 8f;
     private Rigidbody rb;
     private Vector2 movementInput;
     private bool isGrounded;
+
+    private Vector3 externalVelocity;
 
     void Start()
     {
@@ -20,6 +23,11 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         CheckGround();
+        ApplyExternalDecay();
+    }
+
+    void FixedUpdate()
+    {
         MovePlayer();
     }
 
@@ -27,12 +35,12 @@ public class PlayerMovement : MonoBehaviour
     {
         movementInput = value.Get<Vector2>();
     }
-    
+
     void OnJump()
     {
         if (isGrounded)
         {
-            rb.AddForce(new Vector3(0f, jumpForce, 0f), ForceMode.Impulse);
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
     }
 
@@ -43,8 +51,32 @@ public class PlayerMovement : MonoBehaviour
 
     void MovePlayer()
     {
-        Vector3 moveDirection = transform.right * movementInput.x + transform.forward * movementInput.y;
+        Vector3 moveDirection =
+            transform.right * movementInput.x +
+            transform.forward * movementInput.y;
+
         moveDirection.Normalize();
-        rb.linearVelocity = new Vector3(moveDirection.x * moveSpeed, rb.linearVelocity.y, moveDirection.z * moveSpeed);
+
+        Vector3 targetVelocity = new Vector3(
+            moveDirection.x * moveSpeed,
+            rb.linearVelocity.y,
+            moveDirection.z * moveSpeed
+        );
+
+        rb.linearVelocity = targetVelocity + externalVelocity;
+    }
+
+    void ApplyExternalDecay()
+    {
+        externalVelocity = Vector3.Lerp(
+            externalVelocity,
+            Vector3.zero,
+            externalDecay * Time.deltaTime
+        );
+    }
+
+    public void AddExternalVelocity(Vector3 velocity)
+    {
+        externalVelocity += velocity;
     }
 }
