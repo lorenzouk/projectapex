@@ -13,14 +13,17 @@ public class SpeedRamp : MonoBehaviour
 
     public BoostType boostType = BoostType.Forward;
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip jumpSound;
+    public AudioClip speedSound;
+
     private void OnTriggerEnter(Collider other)
     {
         PlayerMovement player = other.GetComponentInParent<PlayerMovement>();
 
         if (player == null)
-        {
             return;
-        }
 
         Vector3 boostDir = Vector3.zero;
 
@@ -43,5 +46,14 @@ public class SpeedRamp : MonoBehaviour
         }
 
         player.AddExternalVelocity(boostDir * boostPower);
+
+        if (audioSource != null)
+        {
+            if (jumpSound != null)
+                audioSource.PlayOneShot(jumpSound);
+
+            if (speedSound != null)
+                audioSource.PlayOneShot(speedSound);
+        }
     }
 }

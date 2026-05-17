@@ -9,7 +9,6 @@ public class WeaponSpawner : MonoBehaviour
 
     [Header("Settings")]
     public float respawnDelay = 5f;
-
     private GameObject currentWeapon;
     private bool waitingToRespawn = false;
 

@@ -4,12 +4,16 @@ public class WeaponPickup : MonoBehaviour
 {
     public GameObject weaponPrefab;
     [SerializeField] float spinSpeed = 90f;
-
     private WeaponSpawner spawner;
 
     public void SetSpawner(WeaponSpawner s)
     {
         spawner = s;
+    }
+
+    void Start()
+    {
+
     }
 
     void Update()
@@ -24,14 +28,14 @@ public class WeaponPickup : MonoBehaviour
 
         bool success = TryPickUp(p);
 
-        if (success && spawner != null)
-        {
-            spawner.NotifyCollected();
-        }
-
         if (success)
         {
-            Destroy(gameObject);
+            if (spawner != null)
+            {
+                spawner.NotifyCollected();
+            }
+
+            Destroy(gameObject, 0.1f);
         }
     }
 

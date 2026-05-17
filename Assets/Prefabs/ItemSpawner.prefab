@@ -85,6 +85,8 @@ MonoBehaviour:
   - {fileID: 1411512464560164, guid: efec1c9dc5098dc46bf020804e334b21, type: 3}
   spawnPoint: {fileID: 8958179340298125786}
   respawnDelay: 5
+  spawnSound: {fileID: 0}
+  audioSource: {fileID: 0}
 --- !u!1001 &2859493261914273459
 PrefabInstance:
   m_ObjectHideFlags: 0

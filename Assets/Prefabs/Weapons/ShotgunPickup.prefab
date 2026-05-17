@@ -158,6 +158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponPickup
   weaponPrefab: {fileID: 1236257789494122, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
   spinSpeed: 90
+  pickupSound: {fileID: 0}
 --- !u!1 &1326079549577358
 GameObject:
   m_ObjectHideFlags: 0

@@ -85,7 +85,7 @@ public class Gun : MonoBehaviour
         currentAmmo--;
 
         FireBullets();
-        PlaySound(shootSound, shootPitchMin, shootPitchMax);
+        PlaySoundDetached(shootSound, bulletSpawnPoint.position, shootPitchMin, shootPitchMax);
 
         StartRecoil();
 
@@ -244,5 +244,21 @@ public class Gun : MonoBehaviour
 
         audioSource.pitch = 1f;
         audioSource.volume = 1f;
+    }
+
+    void PlaySoundDetached(AudioClip clip, Vector3 position, float pitchMin, float pitchMax)
+    {
+        GameObject tempAudio = new GameObject("OneShotAudio");
+        tempAudio.transform.position = position;
+
+        AudioSource src = tempAudio.AddComponent<AudioSource>();
+        src.clip = clip;
+        src.pitch = Random.Range(pitchMin, pitchMax);
+        src.volume = Random.Range(volumeMin, volumeMax);
+        src.spatialBlend = 0f;
+
+        src.Play();
+
+        Destroy(tempAudio, clip.length / src.pitch);
     }
 }
