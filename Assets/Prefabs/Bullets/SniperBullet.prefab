@@ -70,6 +70,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
   speed: 150
   lifeTime: 5
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!96 &4619844177407803355
 TrailRenderer:
   serializedVersion: 4

@@ -139,6 +139,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
   speed: 100
   lifeTime: 3
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!65 &2036347864028889004
 BoxCollider:
   m_ObjectHideFlags: 0

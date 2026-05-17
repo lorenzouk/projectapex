@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4628190596468080}
   - component: {fileID: 33974513469355770}
   - component: {fileID: 23269604117648666}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 4871155855958596}
   - component: {fileID: 33621225348611210}
   - component: {fileID: 23032416416855840}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bolt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -192,7 +192,7 @@ GameObject:
   - component: {fileID: 33705837635148522}
   - component: {fileID: 23860282398207496}
   - component: {fileID: 2752765571716286923}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -322,7 +322,7 @@ GameObject:
   - component: {fileID: 4977263084664720}
   - component: {fileID: 33803936345550136}
   - component: {fileID: 23124041486323528}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -410,7 +410,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2873720950124154780}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BulletSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -442,7 +442,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8188249528738662398}
   - component: {fileID: 1818933372784405225}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Audio Source
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 33092926340133414}
   - component: {fileID: 23100547221564144}
   - component: {fileID: 5450658430857517948}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RPG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,7 +111,7 @@ MonoBehaviour:
   bullet: {fileID: 7651809036330557507, guid: 94cda2e637a5c487e83176ec313592dc, type: 3}
   bulletSpawnPoint: {fileID: 4862459586883938094}
   muzzleFlash: {fileID: 5007695006401086105, guid: d9f7398f0bf8fb048af3ad260d8b6a83, type: 3}
-  recoilDistance: -0.3
+  recoilDistance: -1.2
   recoilSpeed: 10
   bloomAmount: 0
   useShotgunSpread: 0
@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 4525525179064062}
   - component: {fileID: 33625029223417904}
   - component: {fileID: 23391533617881980}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -228,7 +228,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4862459586883938094}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BulletSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1204118783316869164}
   - component: {fileID: 4042734052640293219}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Audio Source
   m_TagString: Untagged
   m_Icon: {fileID: 0}

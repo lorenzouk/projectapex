@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4306242400190624}
   - component: {fileID: 33027836728194906}
   - component: {fileID: 23089900819785866}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bolt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 4594675243249436}
   - component: {fileID: 33179380300721940}
   - component: {fileID: 23269985241092066}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 4855566107710416}
   - component: {fileID: 33850499219332204}
   - component: {fileID: 23421164134073748}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Magazin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: 33265667909663144}
   - component: {fileID: 23745275597904220}
   - component: {fileID: 301206763727479691}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sniper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -384,7 +384,7 @@ MonoBehaviour:
   bullet: {fileID: 2086261179823682334, guid: 1471e98bb0946d847a15230e4b8cb13c, type: 3}
   bulletSpawnPoint: {fileID: 5470363252908252741}
   muzzleFlash: {fileID: 5007695006401086105, guid: d9f7398f0bf8fb048af3ad260d8b6a83, type: 3}
-  recoilDistance: -0.3
+  recoilDistance: -0.5
   recoilSpeed: 10
   bloomAmount: 0
   useShotgunSpread: 0
@@ -411,7 +411,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5470363252908252741}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BulletSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -443,7 +443,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5809093255119581550}
   - component: {fileID: 4163767751516407754}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Audio Source
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -573,6 +573,14 @@ PrefabInstance:
     - target: {fileID: 1378609178869200, guid: 49535f27af2648646a94c1f9918737d6, type: 3}
       propertyPath: m_Name
       value: TAN_LR_Scope_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378609178869200, guid: 49535f27af2648646a94c1f9918737d6, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1796153942692692, guid: 49535f27af2648646a94c1f9918737d6, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4523601712017382, guid: 49535f27af2648646a94c1f9918737d6, type: 3}
       propertyPath: m_LocalScale.x

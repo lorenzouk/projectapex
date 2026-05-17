@@ -6,10 +6,18 @@ public class Bullet : MonoBehaviour
     public float lifeTime = 3f;
 
     private Vector3 direction;
-
+    public LayerMask wallMask;
     void Start()
     {
         direction = -transform.forward;
+
+        float checkRadius = 0.05f;
+        if (Physics.CheckSphere(transform.position, checkRadius, wallMask))
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         Destroy(gameObject, lifeTime);
     }
 

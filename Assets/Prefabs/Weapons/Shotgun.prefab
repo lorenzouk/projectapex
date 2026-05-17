@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 33898383997488124}
   - component: {fileID: 23904141403194016}
   - component: {fileID: 2606802192828245944}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Shotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141,7 +141,7 @@ GameObject:
   - component: {fileID: 4819501579468060}
   - component: {fileID: 33459726747464850}
   - component: {fileID: 23948481808093384}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -231,7 +231,7 @@ GameObject:
   - component: {fileID: 4996469487512398}
   - component: {fileID: 33227245936506880}
   - component: {fileID: 23722440624247890}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -319,7 +319,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5312768343673304040}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BulletSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -351,7 +351,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7899630602881386139}
   - component: {fileID: 1746246035450450765}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Audio Source
   m_TagString: Untagged
   m_Icon: {fileID: 0}

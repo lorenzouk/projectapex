@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4271122294997020}
   - component: {fileID: 33969966666000196}
   - component: {fileID: 23973502960805256}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 33990794486070434}
   - component: {fileID: 23025737108156134}
   - component: {fileID: 4832804774859737046}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: LMG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,9 +204,9 @@ MonoBehaviour:
   bullet: {fileID: 8585542772986347399, guid: f1c24dc36b65de24ab16093f518a7397, type: 3}
   bulletSpawnPoint: {fileID: 6375510767640841389}
   muzzleFlash: {fileID: 5007695006401086105, guid: d9f7398f0bf8fb048af3ad260d8b6a83, type: 3}
-  recoilDistance: -0.1
+  recoilDistance: -0.15
   recoilSpeed: 12
-  bloomAmount: 3
+  bloomAmount: 2
   useShotgunSpread: 0
   spreadAmount: 1
   pelletCount: 1
@@ -233,7 +233,7 @@ GameObject:
   - component: {fileID: 4211039482249024}
   - component: {fileID: 33543448834326324}
   - component: {fileID: 23601845274669596}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Magazin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -323,7 +323,7 @@ GameObject:
   - component: {fileID: 4220910401126438}
   - component: {fileID: 33784703545727648}
   - component: {fileID: 23948615344437080}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bolt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -413,7 +413,7 @@ GameObject:
   - component: {fileID: 4427154760744368}
   - component: {fileID: 33324123896295442}
   - component: {fileID: 23104848348981342}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Slide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -501,7 +501,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6375510767640841389}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BulletSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -533,7 +533,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3616710264635707847}
   - component: {fileID: 7160156247436329313}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Audio Source
   m_TagString: Untagged
   m_Icon: {fileID: 0}

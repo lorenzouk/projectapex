@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 7656560960901204097}
   - component: {fileID: 7666796003993400823}
   - component: {fileID: 5217088984568877180}
-  - component: {fileID: 3383730011637410039}
   - component: {fileID: 1019392553154441901}
+  - component: {fileID: -4805034602976256515}
   m_Layer: 0
   m_Name: Rocket
   m_TagString: Bullet
@@ -114,20 +114,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.10280887, y: 0.10280887, z: 0.89882684}
   m_Center: {x: 0, y: 0, z: -0.29034472}
---- !u!114 &3383730011637410039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7651809036330557507}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee0053d3b24167a4c9f67df03740deee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Bullet
-  speed: 30
-  lifeTime: 5
 --- !u!96 &1019392553154441901
 TrailRenderer:
   serializedVersion: 4
@@ -238,3 +224,23 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &-4805034602976256515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7651809036330557507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5a37e0d62ac9524f9cdf4ad8b6c6740, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Rocket
+  speed: 35
+  lifeTime: 5
+  explosionPrefab: {fileID: 8875697410260298371, guid: d3cca538f00baed4f935030afdd81a7a, type: 3}
+  explosionSound: {fileID: 8300000, guid: fc6c18bf7a7406f4e8940a2191b87730, type: 3}
+  explosionYOffset: 0.5
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 8
