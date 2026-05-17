@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 23100547221564144}
   - component: {fileID: 5450658430857517948}
   m_Layer: 0
-  m_Name: RPG7
+  m_Name: RPG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,7 +34,6 @@ Transform:
   m_Children:
   - {fileID: 1204118783316869164}
   - {fileID: 4862459586883938094}
-  - {fileID: 7067048533373797378}
   - {fileID: 4525525179064062}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -107,21 +106,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5f31db721f8438479a809aa863e714d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gun
-  reloadTime: 2
   fireRate: 3
-  magSize: 5
+  magSize: 3
   bullet: {fileID: 7651809036330557507, guid: 94cda2e637a5c487e83176ec313592dc, type: 3}
   bulletSpawnPoint: {fileID: 4862459586883938094}
   muzzleFlash: {fileID: 5007695006401086105, guid: d9f7398f0bf8fb048af3ad260d8b6a83, type: 3}
   recoilDistance: -0.3
   recoilSpeed: 10
   bloomAmount: 0
+  useShotgunSpread: 0
   spreadAmount: 1
   pelletCount: 1
-  useShotgunSpread: 0
+  reloadTime: 4.5
+  reloadRotationOffset: {x: 66, y: 50, z: 50}
+  upTimePercent: 0.2
+  holdTimePercent: 0.5
+  downTimePercent: 0.2
   audioSource: {fileID: 4042734052640293219}
-  shootSound: {fileID: 8300000, guid: 8fe3f6c612f905542995b6695c54e8fb, type: 3}
-  reloadSound: {fileID: 8300000, guid: f70dca5b4b6b52146860f09d2bec8b3d, type: 3}
+  shootSound: {fileID: 8300000, guid: 015fee7d80a34ef4da6dd316653f9014, type: 3}
+  reloadSound: {fileID: 8300000, guid: a25c38e03158acb45822d17b10094742, type: 3}
   shootPitchMin: 0.97
   shootPitchMax: 1.03
   volumeMin: 0.95
@@ -376,65 +379,3 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1001 &592157379171891213
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 4071463830363502}
-    m_Modifications:
-    - target: {fileID: 7648502832564960271, guid: 56576e0ea623740bb98cbd0da5050b6c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7648502832564960271, guid: 56576e0ea623740bb98cbd0da5050b6c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7648502832564960271, guid: 56576e0ea623740bb98cbd0da5050b6c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7648502832564960271, guid: 56576e0ea623740bb98cbd0da5050b6c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7648502832564960271, guid: 56576e0ea623740bb98cbd0da5050b6c, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7648502832564960271, guid: 56576e0ea623740bb98cbd0da5050b6c, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7648502832564960271, guid: 56576e0ea623740bb98cbd0da5050b6c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7648502832564960271, guid: 56576e0ea623740bb98cbd0da5050b6c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7648502832564960271, guid: 56576e0ea623740bb98cbd0da5050b6c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7648502832564960271, guid: 56576e0ea623740bb98cbd0da5050b6c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7651809036330557507, guid: 56576e0ea623740bb98cbd0da5050b6c, type: 3}
-      propertyPath: m_Name
-      value: RocketDeco
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 56576e0ea623740bb98cbd0da5050b6c, type: 3}
---- !u!4 &7067048533373797378 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7648502832564960271, guid: 56576e0ea623740bb98cbd0da5050b6c, type: 3}
-  m_PrefabInstance: {fileID: 592157379171891213}
-  m_PrefabAsset: {fileID: 0}

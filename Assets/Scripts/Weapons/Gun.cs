@@ -3,6 +3,16 @@ using System.Collections;
 
 public class Gun : MonoBehaviour
 {
+    private enum WeaponState
+    {
+        Idle,
+        Firing,
+        Reloading,
+        Swapping
+    }
+
+    private WeaponState state = WeaponState.Idle;
+
     [Header("Gun Statistics")]
     public float fireRate = 0.1f;
     public int magSize = 20;
@@ -29,98 +39,122 @@ public class Gun : MonoBehaviour
     [Range(0f, 1f)] public float holdTimePercent = 0.2f;
     [Range(0f, 1f)] public float downTimePercent = 0.4f;
 
-    [Header("Audio Settings")]
+    [Header("Audio")]
     public AudioSource audioSource;
     public AudioClip shootSound;
     public AudioClip reloadSound;
+
     [Range(0.95f, 1.05f)] public float shootPitchMin = 0.97f;
     [Range(0.95f, 1.05f)] public float shootPitchMax = 1.03f;
+
     [Range(0.9f, 1.1f)] public float volumeMin = 0.95f;
     [Range(0.9f, 1.1f)] public float volumeMax = 1f;
 
     private int currentAmmo;
-    private bool isReloading = false;
-    private float nextTimeToFire = 0f;
+    private float nextTimeToFire;
 
-    private Quaternion initalRotation;
-    private Vector3 initalPosition;
+    private Quaternion initialRotation;
+    private Vector3 initialPosition;
+
+    private Coroutine recoilRoutine;
+    private Coroutine reloadRoutine;
 
     void Start()
     {
         currentAmmo = magSize;
-        initalRotation = transform.localRotation;
-        initalPosition = transform.localPosition;
-    }
-
-    void PlaySound(AudioClip clip, float pitchMin, float pitchMax)
-    {
-        audioSource.pitch = Random.Range(pitchMin, pitchMax);
-        audioSource.volume = Random.Range(volumeMin, volumeMax);
-
-        audioSource.PlayOneShot(clip);
-
-        audioSource.pitch = 1f;
-        audioSource.volume = 1f;
+        initialRotation = transform.localRotation;
+        initialPosition = transform.localPosition;
     }
 
     public void Shoot()
     {
-        if (isReloading || Time.time < nextTimeToFire)
-        {
+        if (state == WeaponState.Reloading || state == WeaponState.Swapping)
             return;
-        }
+
+        if (Time.time < nextTimeToFire)
+            return;
 
         if (currentAmmo <= 0)
         {
-            StartCoroutine(Reload());
+            StartReload();
             return;
         }
 
+        state = WeaponState.Firing;
         nextTimeToFire = Time.time + fireRate;
         currentAmmo--;
 
+        FireBullets();
+        PlaySound(shootSound, shootPitchMin, shootPitchMax);
+
+        StartRecoil();
+
+        state = WeaponState.Idle;
+    }
+
+    void FireBullets()
+    {
         for (int i = 0; i < pelletCount; i++)
         {
-            Vector3 shootDirection = bulletSpawnPoint.forward;
+            Vector3 dir = bulletSpawnPoint.forward;
+
             if (useShotgunSpread)
             {
-                shootDirection = Quaternion.Euler(Random.Range(-spreadAmount, spreadAmount), Random.Range(-spreadAmount, spreadAmount), 0) * shootDirection;
-                Quaternion bulletRotation = Quaternion.LookRotation(shootDirection);
-                Instantiate(bullet, bulletSpawnPoint.position, bulletRotation);
+                dir = Quaternion.Euler(
+                    Random.Range(-spreadAmount, spreadAmount),
+                    Random.Range(-spreadAmount, spreadAmount),
+                    0
+                ) * dir;
             }
             else
             {
-                shootDirection += new Vector3(Random.Range(-bloomAmount, bloomAmount), Random.Range(-bloomAmount, bloomAmount), Random.Range(-bloomAmount, bloomAmount)) * 0.01f;
-                Quaternion bulletRotation = Quaternion.LookRotation(shootDirection);
-                Instantiate(bullet, bulletSpawnPoint.position, bulletRotation);
+                dir += new Vector3(
+                    Random.Range(-bloomAmount, bloomAmount),
+                    Random.Range(-bloomAmount, bloomAmount),
+                    Random.Range(-bloomAmount, bloomAmount)
+                ) * 0.01f;
             }
+
+            Instantiate(bullet, bulletSpawnPoint.position, Quaternion.LookRotation(dir));
         }
+
         Instantiate(muzzleFlash, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-        PlaySound(shootSound, shootPitchMin, shootPitchMax);
-        StopCoroutine(nameof(Recoil));
-        StartCoroutine(nameof(Recoil));
+    }
+
+
+    public void StartReload()
+    {
+        if (state == WeaponState.Reloading || state == WeaponState.Swapping)
+            return;
+
+        if (currentAmmo >= magSize)
+            return;
+
+        if (reloadRoutine != null)
+            StopCoroutine(reloadRoutine);
+
+        reloadRoutine = StartCoroutine(Reload());
     }
 
     IEnumerator Reload()
     {
-        isReloading = true;
+        state = WeaponState.Reloading;
 
         PlaySound(reloadSound, 0.95f, 1.05f);
 
-        Quaternion startRot = initalRotation;
-        Quaternion upRot = Quaternion.Euler(initalRotation.eulerAngles + reloadRotationOffset);
+        Quaternion startRot = initialRotation;
+        Quaternion upRot = Quaternion.Euler(initialRotation.eulerAngles + reloadRotationOffset);
 
         float upTime = reloadTime * upTimePercent;
         float holdTime = reloadTime * holdTimePercent;
         float downTime = reloadTime * downTimePercent;
 
         float t = 0f;
+
         while (t < upTime)
         {
             t += Time.deltaTime;
-            float p = t / upTime;
-
-            p = Mathf.SmoothStep(0, 1, p);
+            float p = Mathf.SmoothStep(0, 1, t / upTime);
             transform.localRotation = Quaternion.Slerp(startRot, upRot, p);
             yield return null;
         }
@@ -132,8 +166,7 @@ public class Gun : MonoBehaviour
         while (t < downTime)
         {
             t += Time.deltaTime;
-            float p = t / downTime;
-            p = 1f - Mathf.Pow(1f - p, 3f);
+            float p = 1f - Mathf.Pow(1f - (t / downTime), 3f);
             transform.localRotation = Quaternion.Slerp(upRot, startRot, p);
             yield return null;
         }
@@ -141,45 +174,75 @@ public class Gun : MonoBehaviour
         transform.localRotation = startRot;
 
         currentAmmo = magSize;
-        isReloading = false;
+
+        state = WeaponState.Idle;
+        reloadRoutine = null;
     }
 
     public void TryReload()
-    { 
-        if (isReloading)
-        {
-            return;
-        }
-
-        if (currentAmmo >= magSize)
-        {
-            return;
-        }
-
-        StartCoroutine(Reload());
+    {
+        StartReload();
     }
 
-    private IEnumerator Recoil()
+    void StartRecoil()
     {
-        Vector3 recoilTarget = initalPosition + new Vector3(0, 0, -recoilDistance);
-        float t = 0f;
+        if (recoilRoutine != null)
+            StopCoroutine(recoilRoutine);
 
+        recoilRoutine = StartCoroutine(Recoil());
+    }
+
+    IEnumerator Recoil()
+    {
+        Vector3 target = initialPosition + new Vector3(0, 0, -recoilDistance);
+
+        float t = 0f;
         while (t < 1f)
         {
             t += Time.deltaTime * recoilSpeed;
-            transform.localPosition = Vector3.Lerp(initalPosition, recoilTarget, t);
+            transform.localPosition = Vector3.Lerp(initialPosition, target, t);
             yield return null;
         }
 
         t = 0f;
-
         while (t < 1f)
         {
             t += Time.deltaTime * recoilSpeed;
-            transform.localPosition = Vector3.Lerp(recoilTarget, initalPosition, t);
+            transform.localPosition = Vector3.Lerp(target, initialPosition, t);
             yield return null;
         }
 
-        transform.localPosition = initalPosition;
+        transform.localPosition = initialPosition;
+        recoilRoutine = null;
+    }
+
+    public void CancelAllActions()
+    {
+        state = WeaponState.Swapping;
+
+        if (reloadRoutine != null)
+            StopCoroutine(reloadRoutine);
+
+        if (recoilRoutine != null)
+            StopCoroutine(recoilRoutine);
+
+        reloadRoutine = null;
+        recoilRoutine = null;
+
+        transform.localRotation = initialRotation;
+        transform.localPosition = initialPosition;
+
+        state = WeaponState.Idle;
+    }
+
+    void PlaySound(AudioClip clip, float pitchMin, float pitchMax)
+    {
+        audioSource.pitch = Random.Range(pitchMin, pitchMax);
+        audioSource.volume = Random.Range(volumeMin, volumeMax);
+
+        audioSource.PlayOneShot(clip);
+
+        audioSource.pitch = 1f;
+        audioSource.volume = 1f;
     }
 }

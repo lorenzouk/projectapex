@@ -15,14 +15,33 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
-        transform.position += direction * speed * Time.deltaTime;
+        Vector3 displacement = direction * speed * Time.deltaTime;
+        float distance = displacement.magnitude;
+
+        if (Physics.Raycast(transform.position, displacement.normalized, out RaycastHit hit, distance))
+        {
+            HandleHit(hit.collider);
+            return;
+        }
+
+        transform.position += displacement;
     }
-    
+
+    private void HandleHit(Collider other)
+    {
+        if (other.CompareTag("Bullet"))
+            return;
+
+        Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        HandleHit(other);
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("World"))
-        {
-            Destroy(gameObject);
-        }
+        HandleHit(collision.collider);
     }
 }
